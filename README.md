@@ -1,53 +1,45 @@
-# Hero Mission  🏆 — Gamified To-Do App for Children
-
-A Flutter mobile application where children experience tasks as exciting game **missions**, earn **coins**, level up as **heroes**, and redeem **rewards** — all under their parent's watchful control.
-
+Hero Mission  🏆 — Gamified To-Do App for Children
+A Flutter mobile application where children experience tasks as exciting game missions, earn coins, level up as heroes, and redeem rewards — all under their parent's watchful control.
+> 👥 Team project built by a team of 5 · Flutter · Firebase
 ---
-
-## ✨ Features
-
-### For Children (Game Experience)
-- 🎮 **Mission-style tasks** — colorful gradient cards with status badges
-- 🪙 **Coin rewards** — animated counter that bounces when you earn coins  
-- ⭐ **XP & Levels** — 10 levels from Newbie to Grand Master
-- 🔥 **Daily streaks** — tracked automatically each day
-- 🏅 **Badges** — 7 unlockable achievements
-- 🎁 **Rewards Shop** — redeem coins for parent-defined rewards
-- 🎉 **Celebration screen** — full confetti burst on mission completion
-- 🧑‍🎤 **Avatar selector** — 8 built-in cartoon animal avatars
-
-### For Parents (Clean & Professional)
-- 👨‍👩‍👧‍👦 **Dashboard** — children overview with XP bars, coins, and streaks
-- ⚔️ **Mission creator** — title, description, coin reward (slider), deadline, child assignment
-- ✅ **Approval system** — approve or reject completed missions
-- 📊 **Progress viewer** — detailed stats and badge overview per child
-
+📸 Screenshots
+![Hero Mission screens](hero-mission-screens.png)
 ---
-
-## 🚀 Firebase Setup (Required)
-
-### Step 1 — Create Firebase Project
-1. Go to [console.firebase.google.com](https://console.firebase.google.com)
-2. Click **Add Project** → follow the wizard
-3. Enable **Google Analytics** (optional)
-
-### Step 2 — Enable Services
-1. **Authentication** → Sign-in method → Enable **Google**
-2. **Cloud Firestore** → Create database → Start in **test mode** (update rules before production)
-
-### Step 3 — Add Android App
-1. In Firebase Console → Project Settings → Add App → Android
-2. Package name: `com.kidquest.todoGame`
-3. Download **`google-services.json`**
-4. Place it at: `android/app/google-services.json`
-
-### Step 4 — Add iOS App (if needed)
-1. Add App → iOS
-2. Bundle ID: `com.kidquest.todoGame`
-3. Download **`GoogleService-Info.plist`**
-4. Place it at: `ios/Runner/GoogleService-Info.plist`
-
-### Step 5 — Configure FlutterFire
+✨ Features
+For Children (Game Experience)
+🎮 Mission-style tasks — colorful gradient cards with status badges
+🪙 Coin rewards — animated counter that bounces when you earn coins
+⭐ XP & Levels — 10 levels from Newbie to Grand Master
+🔥 Daily streaks — tracked automatically each day
+🏅 Badges — 7 unlockable achievements
+🎁 Rewards Shop — redeem coins for parent-defined rewards
+🎉 Celebration screen — full confetti burst on mission completion
+🧑‍🎤 Avatar selector — 8 built-in cartoon animal avatars
+For Parents (Clean & Professional)
+👨‍👩‍👧‍👦 Dashboard — children overview with XP bars, coins, and streaks
+⚔️ Mission creator — title, description, coin reward (slider), deadline, child assignment
+✅ Approval system — approve or reject completed missions
+📊 Progress viewer — detailed stats and badge overview per child
+---
+🚀 Firebase Setup (Required)
+Step 1 — Create Firebase Project
+Go to console.firebase.google.com
+Click Add Project → follow the wizard
+Enable Google Analytics (optional)
+Step 2 — Enable Services
+Authentication → Sign-in method → Enable Google
+Cloud Firestore → Create database → Start in test mode (update rules before production)
+Step 3 — Add Android App
+In Firebase Console → Project Settings → Add App → Android
+Package name: `com.kidquest.todoGame`
+Download `google-services.json`
+Place it at: `android/app/google-services.json`
+Step 4 — Add iOS App (if needed)
+Add App → iOS
+Bundle ID: `com.kidquest.todoGame`
+Download `GoogleService-Info.plist`
+Place it at: `ios/Runner/GoogleService-Info.plist`
+Step 5 — Configure FlutterFire
 ```bash
 # Install FlutterFire CLI
 dart pub global activate flutterfire_cli
@@ -55,13 +47,9 @@ dart pub global activate flutterfire_cli
 # Configure (auto-generates lib/firebase_options.dart)
 flutterfire configure
 ```
-
 > **Note**: If using `flutterfire configure`, it will overwrite `lib/firebase_options.dart` with your real values. Otherwise, manually replace the placeholder values in that file.
-
 ---
-
-## 🗄️ Firestore Data Structure
-
+🗄️ Firestore Data Structure
 ```
 users/{userId}
   ├── name: string
@@ -103,20 +91,14 @@ progress/{childId}
   ├── badges: string[]
   └── updatedAt: timestamp
 ```
-
-### Firestore Indexes Required
+Firestore Indexes Required
 Add these composite indexes in Firebase Console:
-
-| Collection | Fields | Order |
-|---|---|---|
-| `tasks` | `parentId` ASC, `status` ASC, `completedAt` DESC | — |
-| `tasks` | `childId` ASC, `createdAt` DESC | — |
-| `rewards` | `childId` ASC, `createdAt` ASC | — |
-
+Collection	Fields	Order
+`tasks`	`parentId` ASC, `status` ASC, `completedAt` DESC	—
+`tasks`	`childId` ASC, `createdAt` DESC	—
+`rewards`	`childId` ASC, `createdAt` ASC	—
 ---
-
-## 🏗️ Project Structure
-
+🏗️ Project Structure
 ```
 lib/
 ├── core/
@@ -175,11 +157,8 @@ lib/
 ├── firebase_options.dart        # ← REPLACE with your config
 └── main.dart
 ```
-
 ---
-
-## ▶️ Running the App
-
+▶️ Running the App
 ```bash
 # Install dependencies
 flutter pub get
@@ -187,81 +166,50 @@ flutter pub get
 # Run on connected device/emulator
 flutter run
 
+# Run on Chrome (fixed port required for Google Sign-In)
+flutter run -d chrome --web-port=5000
+
 # Build debug APK
 flutter build apk --debug
 ```
-
 ---
-
-## 🎮 Gamification System
-
-| Mechanic | Details |
-|---|---|
-| **Coins** | Awarded when parent approves a task. Spendable in rewards shop. |
-| **XP** | Cumulative (never decreases). Coins and XP are the same value added. |
-| **Levels** | 0→50→150→300→500→750→1050→1400→1800→2250 XP |
-| **Streak** | Counts consecutive days with at least 1 approved task. Resets if gap > 1 day. |
-| **Badges** | 7 milestones: First Mission, 5-day streak, 10-day streak, Level 5, Level 10, 100 XP, 10 missions |
-
+🎮 Gamification System
+Mechanic	Details
+Coins	Awarded when parent approves a task. Spendable in rewards shop.
+XP	Cumulative (never decreases). Coins and XP are the same value added.
+Levels	0→50→150→300→500→750→1050→1400→1800→2250 XP
+Streak	Counts consecutive days with at least 1 approved task. Resets if gap > 1 day.
+Badges	7 milestones: First Mission, 5-day streak, 10-day streak, Level 5, Level 10, 100 XP, 10 missions
 ---
-
-## 🎨 Design System
-
-### Child Theme (Dark Game Mode)
-- Font: **Nunito** (rounded, playful)
-- Primary: `#6C63FF` (Purple)
-- Gold: `#FFD700` (Coins)
-- Accent: `#00B4FF` (Sky Blue)
-- Background: `#1A1A2E` (Deep Dark)
-
-### Parent Theme (Light Professional)
-- Font: **Poppins** (clean, modern)
-- Primary: `#5C6BC0` (Indigo)
-- Background: `#F8F9FA` (Light Grey)
-- Clean cards with subtle borders
-
+🎨 Design System
+Child Theme (Dark Game Mode)
+Font: Nunito (rounded, playful)
+Primary: `#6C63FF` (Purple)
+Gold: `#FFD700` (Coins)
+Accent: `#00B4FF` (Sky Blue)
+Background: `#1A1A2E` (Deep Dark)
+Parent Theme (Light Professional)
+Font: Poppins (clean, modern)
+Primary: `#5C6BC0` (Indigo)
+Background: `#F8F9FA` (Light Grey)
+Clean cards with subtle borders
 ---
-
-## 🔐 Security Notes
-
-Before going to production, update Firestore Security Rules:
-```javascript
-rules_version = '2';
-service cloud.firestore {
-  match /databases/{database}/documents {
-    match /users/{userId} {
-      allow read: if request.auth != null;
-      allow write: if request.auth.uid == userId;
-    }
-    match /tasks/{taskId} {
-      allow read: if request.auth != null;
-      allow write: if request.auth != null;
-    }
-    match /rewards/{rewardId} {
-      allow read, write: if request.auth != null;
-    }
-    match /progress/{childId} {
-      allow read, write: if request.auth != null;
-    }
-  }
-}
-```
-
+🔐 Security
+Firestore access is restricted so that each parent can only read and write their own family's data (children, tasks, rewards, redemptions, and progress).
+Security rules live in `firestore.rules` — publish them from Firebase Console → Firestore Database → Rules.
+Every Firestore query in the app is scoped to the signed-in parent's `parentId`.
+A child can only log in on a device where a parent is already signed in.
 ---
-
-## 👩‍💻 My Role
-
-This is a team project built together with [@noorbam](https://github.com/noorbam). I worked on every part of the app:
-- **UI & screens:** child game-mode screens and parent dashboard in Flutter
-- **Gamification logic:** missions, coins, XP levels, streaks, badges, and rewards
-- **Firebase:** authentication, Firestore data structure, and security rules
-
-## 👥 Team
-- Amani Rabea Ban Makashen — [@Amani20f](https://github.com/Amani20f)
-- [@noorbam](https://github.com/noorbam)
-
-> Original repository: [noorbam/Hero_Mission](https://github.com/noorbam/Hero_Mission)
-
+👥 Team
+Hero Mission was built by a team of 5. We worked together across every part of the app:
+UI & screens: child game-mode screens and parent dashboard in Flutter
+Gamification logic: missions, coins, XP levels, streaks, badges, and rewards
+Firebase: authentication, Firestore data structure, and security rules
+Team members
+Noor Abdullah — @noorbam
+Amani Rabeea — @Amani20f
+Nora Omar
+Hanan Omar
+Raghad Akram
 ---
-
-*Built with Flutter · Firebase · Provider · flutter_animate · confetti*
+Built with Flutter · Firebase · Provider · flutter_animate · confetti
